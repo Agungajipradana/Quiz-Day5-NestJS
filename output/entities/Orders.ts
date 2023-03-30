@@ -6,34 +6,34 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { OrderDetail } from "./OrderDetail";
-import { Users } from "./Users";
-import { Product } from "./Product";
+} from 'typeorm';
+import { OrderDetail } from './OrderDetail';
+import { Users } from './Users';
+import { Product } from './Product';
 
-@Index("order_pk", ["orderId"], { unique: true })
-@Entity("orders", { schema: "public" })
+@Index('order_pk', ['orderId'], { unique: true })
+@Entity('orders', { schema: 'public' })
 export class Orders {
-  @PrimaryGeneratedColumn({ type: "integer", name: "order_id" })
+  @PrimaryGeneratedColumn({ type: 'integer', name: 'order_id' })
   orderId: number;
 
-  @Column("integer", { name: "totalproduct", nullable: true })
+  @Column('integer', { name: 'totalproduct', nullable: true })
   totalproduct: number | null;
 
-  @Column("numeric", { name: "totalprice", nullable: true })
+  @Column('numeric', { name: 'totalprice', nullable: true })
   totalprice: string | null;
 
-  @Column("timestamp with time zone", {
-    name: "createdat",
+  @Column('timestamp with time zone', {
+    name: 'createdat',
     nullable: true,
-    default: () => "now()",
+    default: () => 'now()',
   })
   createdat: Date | null;
 
-  @Column("timestamp with time zone", {
-    name: "updatedat",
+  @Column('timestamp with time zone', {
+    name: 'updatedat',
     nullable: true,
-    default: () => "now()",
+    default: () => 'now()',
   })
   updatedat: Date | null;
 
@@ -41,10 +41,10 @@ export class Orders {
   orderDetails: OrderDetail[];
 
   @ManyToOne(() => Users, (users) => users.orders, {
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: "user_id", referencedColumnName: "userId" }])
+  @JoinColumn([{ name: 'user_id', referencedColumnName: 'userId' }])
   user: Users;
 
   @OneToMany(() => Product, (product) => product.category)

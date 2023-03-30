@@ -14,6 +14,8 @@ import { LocalStrategy } from 'src/auth/local.strategy';
 import { ProductsService } from 'src/service/product/product.service';
 import { ProductsController } from 'src/controller/product/product.controller';
 import { JwtStrategy } from 'src/auth/jwt.strategy';
+import { CustomerService } from 'src/service/customers/customers.service';
+import { CustomerController } from 'src/controller/customers/customers.controller';
 
 @Module({
   imports: [
@@ -31,8 +33,14 @@ import { JwtStrategy } from 'src/auth/jwt.strategy';
       signOptions: { expiresIn: '2d' },
     }),
   ],
-  providers: [UsersService, ProductsService, LocalStrategy, JwtStrategy],
-  controllers: [UsersController, ProductsController],
+  providers: [
+    UsersService,
+    ProductsService,
+    LocalStrategy,
+    JwtStrategy,
+    CustomerService,
+  ],
+  controllers: [UsersController, ProductsController, CustomerController],
   exports: [UsersService],
 })
 export class ModuleModule {}

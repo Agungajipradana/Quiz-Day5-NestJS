@@ -28,7 +28,6 @@ export class UsersController {
   @Get('/profile')
   public async getProfile(@Request() req) {
     const { order, ...result } = req.user;
-
     return result;
   }
 

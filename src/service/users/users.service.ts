@@ -17,10 +17,10 @@ export class UsersService {
 
   public async signup(fields: any) {
     try {
-      const hashPassword = await Bcrypt.hash(fields.password, Salt);
+      const hashPassword = await Bcrypt.hash(fields.passwords, Salt);
       const user = await this.userRepo.save({
         username: fields.username,
-        password: hashPassword,
+        passwords: hashPassword,
         createat: new Date(),
         updateat: new Date(),
       });
@@ -33,15 +33,15 @@ export class UsersService {
 
   public async validateUser(username: string, password: string) {
     const user = await this.userRepo.findOne({
-      relations: {
-        customers: true,
-        orders: { orderDetails: { product: true } },
-      },
+      // relations: {
+      //   customers: true,
+      //   orders: { orderDetails: { product: true } },
+      // },
       where: [{ username: username }],
     });
 
     const compare = await Bcrypt.compare(password, user.passwords);
-
+    console.log(compare);
     if (compare) {
       const { passwords, ...result } = user;
       return result;
@@ -49,11 +49,12 @@ export class UsersService {
   }
 
   public async login(user: any) {
+    console.log(user);
     const payload = {
-      userName: user.username,
-      userPass: user.password,
-      cust: user.customers,
-      order: user.orders,
+      username: user.username,
+      passwords: user.passwords,
+      // cust: user.customers,
+      // order: user.orders,
     };
     return {
       access_token: this.jwtService.sign(payload),
