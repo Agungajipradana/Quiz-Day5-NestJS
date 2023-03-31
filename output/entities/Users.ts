@@ -21,8 +21,8 @@ export class Users {
   })
   username: string | null;
 
-  @Column('text', { name: 'passwords', nullable: true })
-  passwords: string | null;
+  @Column('text', { name: 'password', nullable: true })
+  password: string | null;
 
   @Column('timestamp with time zone', {
     name: 'createdat',

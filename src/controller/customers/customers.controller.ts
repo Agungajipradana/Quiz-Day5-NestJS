@@ -39,8 +39,9 @@ export class CustomerController {
   public async Update(
     @Param('id') id: number,
     @Body('firstname') firstname: string,
+    @Body('lastname') lastname: string,
   ) {
-    return await this.ServicesCustomer.Update(id, firstname);
+    return await this.ServicesCustomer.Update(id, firstname, lastname);
   }
   @Delete('/:id')
   public async Delete(@Param('id') id: string) {

@@ -50,10 +50,11 @@ export class CustomerService {
       return error.message;
     }
   }
-  public async Update(id: number, firstname: string) {
+  public async Update(id: number, firstname: string, lastname: string) {
     try {
       const customer = await this.customerRepo.update(id, {
         firstname: firstname,
+        lastname: lastname,
       });
       return customer;
     } catch (error) {

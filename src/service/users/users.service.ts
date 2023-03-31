@@ -17,21 +17,21 @@ export class UsersService {
 
   public async signup(fields: any) {
     try {
-      const hashPassword = await Bcrypt.hash(fields.passwords, Salt);
+      const hashPassword = await Bcrypt.hash(fields.password, Salt);
       const user = await this.userRepo.save({
         username: fields.username,
-        passwords: hashPassword,
+        password: hashPassword,
         createat: new Date(),
         updateat: new Date(),
       });
-      const { passwords, ...result } = user;
+      const { password, ...result } = user;
       return result;
     } catch (error) {
       return error.message;
     }
   }
 
-  public async validateUser(username: string, password: string) {
+  public async validateUser(username: string, pass: string) {
     const user = await this.userRepo.findOne({
       // relations: {
       //   customers: true,
@@ -40,10 +40,10 @@ export class UsersService {
       where: [{ username: username }],
     });
 
-    const compare = await Bcrypt.compare(password, user.passwords);
+    const compare = await Bcrypt.compare(pass, user.password);
     console.log(compare);
     if (compare) {
-      const { passwords, ...result } = user;
+      const { password, ...result } = user;
       return result;
     }
   }
@@ -52,7 +52,7 @@ export class UsersService {
     console.log(user);
     const payload = {
       username: user.username,
-      passwords: user.passwords,
+      password: user.password,
       // cust: user.customers,
       // order: user.orders,
     };
